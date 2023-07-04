@@ -4,9 +4,11 @@ $serverList = @("DC02","DC01","FS01","W")
 $regKey = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization'
 $Path_for_PNG = "C:\Users\sccm\Pictures\test.png"
 
+$credentials = Get-Credential
+
 foreach ($server in $serverList) {
     try {
-        $session = New-PSSession -ComputerName $server -ErrorAction Stop
+        $session = New-PSSession -ComputerName $server -Credential $credentials -ErrorAction Stop
         
         # create the key if it doesn't already exist on the remote server
         Invoke-Command -Session $session -ScriptBlock {
